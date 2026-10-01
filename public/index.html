@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inbound Triage</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --text: #1b1f24; --muted: #5b6470; --line: #e2e5ea;
+    --accent: #3b5bdb; --accent-soft: #e7ecff; --warn: #b35c00; --warn-soft: #fff1e0;
+    --bad: #c92a2a; --bad-soft: #ffe8e8; --good: #2b8a3e; --good-soft: #e6f6ea; --bar: #dfe3ea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111418; --panel: #1a1e24; --text: #e6e9ee; --muted: #9aa3ae; --line: #2a3038;
+      --accent: #8ea6ff; --accent-soft: #232c4a; --warn: #ffb35c; --warn-soft: #3a2a14;
+      --bad: #ff8787; --bad-soft: #3b1d1d; --good: #69db7c; --good-soft: #1b3322; --bar: #2f3640;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { padding: 16px 20px; border-bottom: 1px solid var(--line); background: var(--panel); display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+  h1 { font-size: 18px; margin: 0; }
+  h2 { font-size: 14px; margin: 0 0 10px; display: flex; gap: 8px; align-items: center; }
+  .count { background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 0 8px; font-size: 12px; }
+  .banner { padding: 8px 20px; background: var(--warn-soft); color: var(--warn); border-bottom: 1px solid var(--line); }
+  .banner[hidden] { display: none; }
+  main { padding: 16px 20px 40px; display: grid; gap: 16px; grid-template-columns: 280px 1fr; align-items: start; }
+  aside { position: sticky; top: 16px; display: grid; gap: 16px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+  .board { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); align-items: start; }
+  label { display: block; color: var(--muted); font-size: 12px; margin-top: 10px; }
+  label:first-of-type { margin-top: 0; }
+  .slider { display: flex; align-items: center; gap: 8px; }
+  .slider input { flex: 1; }
+  .slider output { width: 36px; text-align: right; font-variant-numeric: tabular-nums; color: var(--text); }
+  input[type=text], input[type=email], textarea { width: 100%; padding: 7px 9px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); font: inherit; }
+  textarea { min-height: 110px; resize: vertical; }
+  button { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--text); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); margin-top: 10px; width: 100%; }
+  button:disabled { opacity: .6; cursor: wait; }
+  .hint { color: var(--muted); font-size: 12px; margin: 8px 0 0; }
+  .error { color: var(--bad); font-size: 12px; margin: 8px 0 0; }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; background: var(--panel); }
+  .card .top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .subject { font-weight: 600; }
+  .from { color: var(--muted); font-size: 12px; }
+  .snippet { margin: 6px 0; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .tag { font-size: 12px; border-radius: 4px; padding: 1px 7px; background: var(--bar); }
+  .tag.p1, .tag.bad { background: var(--bad-soft); color: var(--bad); }
+  .tag.p2, .tag.warn { background: var(--warn-soft); color: var(--warn); }
+  .tag.good { background: var(--good-soft); color: var(--good); }
+  .big { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .big.dim { color: var(--muted); }
+  details { margin-top: 8px; }
+  summary { cursor: pointer; color: var(--accent); font-size: 12px; }
+  .body { white-space: pre-wrap; margin: 8px 0; padding: 8px; background: var(--bg); border-radius: 6px; }
+  .answer { margin: 8px 0; }
+  .answer .name { font-size: 12px; color: var(--muted); }
+  .row { display: grid; grid-template-columns: 110px 1fr 40px; gap: 6px; align-items: center; font-size: 12px; }
+  .track { height: 6px; background: var(--bar); border-radius: 3px; overflow: hidden; }
+  .fill { height: 100%; background: var(--accent); }
+  .row.win { font-weight: 600; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .empty { color: var(--muted); font-size: 13px; padding: 8px 0; }
+  @media (max-width: 760px) {
+    header, main, .banner { padding-left: 16px; padding-right: 16px; }
+    main { grid-template-columns: 1fr; }
+    aside { position: static; }
+    .board { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Inbound Triage</h1>
+  <button id="reset" type="button">Reload sample inbox</button>
+</header>
+<div class="banner" id="mock-banner" hidden>
+  Demo mode: answers are simulated with keyword rules, not TypeSafe. Set TYPESAFE_API_KEY on the server to use real judgments.
+</div>
+<main>
+  <aside>
+    <section class="panel">
+      <h2>Rules</h2>
+      <label for="threshold">Send to review when kind confidence is below</label>
+      <div class="slider"><input id="threshold" type="range" min="0" max="1" step="0.05"><output for="threshold"></output></div>
+      <div id="weights"></div>
+      <label for="fit-floor">Set aside leads with product fit below</label>
+      <div class="slider"><input id="fit-floor" type="range" min="0" max="3" step="0.25"><output for="fit-floor"></output></div>
+      <p class="hint">Changing these re-sorts the queues instantly from the stored answers. Nothing is sent to TypeSafe again.</p>
+    </section>
+    <form class="panel" id="new-message">
+      <h2>Paste a new email</h2>
+      <label for="f-name">From name</label><input id="f-name" name="from_name" type="text" maxlength="200">
+      <label for="f-email">From email</label><input id="f-email" name="from_email" type="email" maxlength="320">
+      <label for="f-subject">Subject</label><input id="f-subject" name="subject" type="text" maxlength="300">
+      <label for="f-body">Body</label><textarea id="f-body" name="body" required maxlength="10000"></textarea>
+      <button class="primary" type="submit">Triage it</button>
+      <p class="error" id="form-error" hidden></p>
+    </form>
+  </aside>
+  <div class="board">
+    <section class="panel"><h2>Needs review <span class="count" id="c-review">0</span></h2><div id="q-review"></div></section>
+    <section class="panel"><h2>Support <span class="count" id="c-support">0</span></h2><div id="q-support"></div></section>
+    <section class="panel"><h2>Leads <span class="count" id="c-sales">0</span></h2><div id="q-sales"></div></section>
+    <section class="panel"><h2>Archived <span class="count" id="c-archive">0</span></h2><div id="q-archive"></div></section>
+  </div>
+</main>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

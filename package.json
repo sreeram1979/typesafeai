@@ -1,0 +1,24 @@
+{
+  "name": "inbound-triage",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Inbox triage for support tickets and sales leads, built on TypeSafe judgments",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "demo": "TYPESAFE_MOCK=1 tsx src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@typesafe-ai/sdk": "^0.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

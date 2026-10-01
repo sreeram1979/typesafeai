@@ -1,0 +1,74 @@
+[
+  {
+    "from_name": "Priya Raman",
+    "from_email": "priya@brightcart.io",
+    "subject": "Dashboards down for our whole team",
+    "body": "Since about 9am none of our dashboards load, we just get a 500 error. We have a board review at 2pm today that depends on these numbers. Please help urgently."
+  },
+  {
+    "from_name": "Tom Becker",
+    "from_email": "tom.becker@fieldnote.app",
+    "subject": "Charged twice this month",
+    "body": "Hi, I see two charges of $499 on our card for October. Can you refund the duplicate? Honestly this is the second billing mess this year and we're starting to look at other tools."
+  },
+  {
+    "from_name": "Alicia Gomez",
+    "from_email": "alicia@northpeak.com",
+    "subject": "Enterprise pricing for 200 analysts",
+    "body": "I'm the VP of Data at Northpeak. We have about 200 analysts on a homegrown event pipeline that we need to replace before our contract with the current vendor ends next month. We need SSO, audit logs and EU data residency. Can we get a call this week to talk Enterprise pricing?"
+  },
+  {
+    "from_name": "Jordan Lee",
+    "from_email": "jordan.lee@gmail.com",
+    "subject": "Student project",
+    "body": "Hey! I'm a CS student building a habit tracker app for my capstone. Is there a free plan or student discount? Just want to try funnels for a class demo."
+  },
+  {
+    "from_name": "Sam Okafor",
+    "from_email": "sam@loopwise.co",
+    "subject": "Can't log in after enabling 2FA",
+    "body": "I turned on two-factor auth yesterday and lost my phone. Now I can't get into my account. Is there a recovery process? Not urgent, my teammates can still see the dashboards."
+  },
+  {
+    "from_name": "Mei Chen",
+    "from_email": "mei.chen@quillhealth.com",
+    "subject": "Evaluating analytics tools for our product team",
+    "body": "I'm a product manager at Quill Health (about 15 people on the product side). We're comparing a few analytics tools for funnels and retention this quarter. Could you send over a comparison of your Team plan and a trial link?"
+  },
+  {
+    "from_name": "Growth Hacker Pro",
+    "from_email": "deals@seo-rankers-pro.biz",
+    "subject": "Rank #1 on Google GUARANTEED!!!",
+    "body": "Dear website owner, we guarantee first page Google ranking in 7 days. Click here to claim your 90% discount today only!!!"
+  },
+  {
+    "from_name": "Rachel Adams",
+    "from_email": "rachel@adams-ventures.com",
+    "subject": "Partnership opportunity",
+    "body": "Hi team, I run a newsletter for 40k product managers and would love to explore a sponsored placement or co-marketing partnership. Open to a quick chat?"
+  },
+  {
+    "from_name": "Diego Alvarez",
+    "from_email": "diego@shopfloor.mx",
+    "subject": "Need ad attribution across Facebook and Google",
+    "body": "We're a mid-size ecommerce brand looking for a tool that tells us which Facebook and Google ads drive purchases. Does your platform do multi-touch ad attribution? Looking to decide in the next few weeks."
+  },
+  {
+    "from_name": "Hannah Weiss",
+    "from_email": "hannah@tidalbank.eu",
+    "subject": "Delete all data for a former user",
+    "body": "Under GDPR we received an erasure request from one of our end users. Please confirm how we delete all events tied to user ID 88213 from your systems. We need to respond to them within 30 days."
+  },
+  {
+    "from_name": "Kevin Park",
+    "from_email": "kevin@stackhaus.dev",
+    "subject": "Upgrade from Starter?",
+    "body": "We've been on Starter for a year and just hit the event limit. The founders want to move to Team so all 12 of us get seats. What's the process, and can we switch today?"
+  },
+  {
+    "from_name": "Olivia Grant",
+    "from_email": "olivia@meadowlabs.ai",
+    "subject": "Question",
+    "body": "Hi, we're thinking about analytics. Also one of our charts looked off yesterday. Can someone get back to me?"
+  }
+]
